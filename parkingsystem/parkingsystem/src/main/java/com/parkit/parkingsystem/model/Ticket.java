@@ -1,15 +1,17 @@
 package com.parkit.parkingsystem.model;
 
 import java.util.Calendar;
-import java.util.Date;
 
 public class Ticket {
     private int id;
     private ParkingSpot parkingSpot;
     private String vehicleRegNumber;
     private double price;
-    private Date inTime;
-    private Date outTime;
+    private Calendar inTime;
+    private Calendar outTime;
+    private boolean recurrentUser;
+    //private String displayInTime;
+    //private String displayOutTime;
 
     public int getId() {
         return id;
@@ -43,19 +45,27 @@ public class Ticket {
         this.price = price;
     }
 
-    public Date getInTime() {
+    public Calendar getInTime() {
         return inTime;
     }
 
-    public void setInTime(Date inTime) {
+    public void setInTime(Calendar inTime) {
         this.inTime = inTime;
     }
 
-    public Date getOutTime() {
+    public Calendar getOutTime() {
         return outTime;
     }
 
-    public void setOutTime(Date outTime) {
+    public void setOutTime(Calendar outTime) {
         this.outTime = outTime;
     }
+
+    public boolean getRecurrentUser() {
+		return this.recurrentUser;	
+	}
+    
+	public void setRecurrentUser(boolean bool) {
+		this.recurrentUser = bool;	
+	}
 }

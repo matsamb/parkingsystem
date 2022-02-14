@@ -8,18 +8,33 @@ import java.sql.*;
 public class DataBaseConfig {
 
     private static final Logger logger = LogManager.getLogger("DataBaseConfig");
+    
+    /**
+     * Connects to a data base.
+     * 
+     * @return connection to the prod data base
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
 
     public Connection getConnection() throws ClassNotFoundException, SQLException {
         logger.info("Create DB connection");
-        Class.forName("com.mysql.cj.jdbc.Driver");
+        Class.forName("com.mysql.cj.jdbc.Driver") ;
         return DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/prod?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"
+                "jdbc:mysql://localhost:3306/test?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"
                 ,"root","rootroot");
     }
 
+    
+    /**
+     * Closes data base connection
+     * 
+     * @param con
+     */
+    
     public void closeConnection(Connection con){
         if(con!=null){
-            try {
+            try { 
                 con.close(); 
                 logger.info("Closing DB connection");
             } catch (SQLException e) {
@@ -28,6 +43,13 @@ public class DataBaseConfig {
         }
     }
 
+    
+    /**
+     * Closes a prepared SQL query.
+     * 
+     * @param ps 
+     */
+    
     public void closePreparedStatement(PreparedStatement ps) {
         if(ps!=null){
             try {
@@ -39,6 +61,13 @@ public class DataBaseConfig {
         }
     }
 
+    
+    /**
+     * Closes the query result recovery object.
+     * 
+     * @param rs
+     */
+    
     public void closeResultSet(ResultSet rs) {
         if(rs!=null){
             try {

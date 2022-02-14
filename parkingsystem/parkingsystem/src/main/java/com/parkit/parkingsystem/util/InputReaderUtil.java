@@ -5,11 +5,24 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Scanner;
 
+/**
+ * Reads inputs from the console.
+ *
+ * @author matlu
+ *
+ */ 
+
 public class InputReaderUtil {
 
     private static Scanner scan = new Scanner(System.in);
     private static final Logger logger = LogManager.getLogger("InputReaderUtil");
 
+    
+    /**
+     * 
+     * @return int input or -1 for invalid input
+     */
+    
     public int readSelection() {
         try {
             int input = Integer.parseInt(scan.nextLine());
@@ -21,6 +34,13 @@ public class InputReaderUtil {
         }
     }
 
+    
+    /**
+     * 
+     * @return String vehicle registration number
+     * @throws Exception if invalid input is provided
+     */
+    
     public String readVehicleRegistrationNumber() throws Exception {
         try {
             String vehicleRegNumber= scan.nextLine();

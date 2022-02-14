@@ -6,10 +6,20 @@ import com.parkit.parkingsystem.util.InputReaderUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Basic user interface on the console.
+ * 
+ * @author matlu
+ *
+ */
+
 public class InteractiveShell {
 
     private static final Logger logger = LogManager.getLogger("InteractiveShell");
 
+    /**
+     *Reads input from the console. 
+     */
     public static void loadInterface(){
         logger.info("App initialized!!!");
         System.out.println("Welcome to Parking System!");
@@ -22,6 +32,7 @@ public class InteractiveShell {
 
         while(continueApp){
             loadMenu();
+
             int option = inputReaderUtil.readSelection();
             switch(option){
                 case 1: {
@@ -38,10 +49,13 @@ public class InteractiveShell {
                     break;
                 }
                 default: System.out.println("Unsupported option. Please enter a number corresponding to the provided menu");
-            }
+            } 
         }
     }
 
+    /**
+     * Provides a list of option to choose from on the console.
+     */
     private static void loadMenu(){
         System.out.println("Please select an option. Simply enter the number to choose an action");
         System.out.println("1 New Vehicle Entering - Allocate Parking Space");
