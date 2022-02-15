@@ -32,14 +32,12 @@ public class ParkingServiceTest {
 	private static ParkingSpotDAO parkingSpotDAO;
 	@Mock
 	private static TicketDAO ticketDAO;
-	// private static Ticket ticket;
-	// private static ParkingSpot parkingSpot;
-	@Disabled
+	
 	@BeforeEach
 	private void setUpPerTestForCarsForOneHour() {
 		try {
-			when(inputReaderUtil.readVehicleRegistrationNumber()).thenReturn("ABCDEF");
-			when (inputReaderUtil.readSelection()).thenReturn(1);
+			//when(inputReaderUtil.readVehicleRegistrationNumber()).thenReturn("ABCDEF");
+			//when (inputReaderUtil.readSelection()).thenReturn(1);
 
 			ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);
 			Ticket ticket = new Ticket();
@@ -51,12 +49,18 @@ public class ParkingServiceTest {
 			ticket.setParkingSpot(parkingSpot);
 			ticket.setVehicleRegNumber("ABCDEF"); 
 
-			// when(ticket.getPrice()).thenReturn(Fare.CAR_RATE_PER_HOUR);
+			when(ticket.getPrice()).thenReturn(Fare.CAR_RATE_PER_HOUR);
 
-			when(ticketDAO.getTicket(anyString())).thenReturn(ticket);
+			when(ticketDAO.getTicket(any(String.class))).thenReturn(ticket);
 			when(ticketDAO.updateTicket(any(Ticket.class))).thenReturn(true);
+			when(ticketDAO.saveTicket(any(Ticket.class))).thenReturn(true);
+			when(ticketDAO.recurringUserTicket(any(String.class))).thenReturn(true);
+
+
+			
 			when(parkingSpotDAO.updateParking(any(ParkingSpot.class))).thenReturn(true);
-			//when(parkingSpotDAO.updateToEmptyParking());
+			when(parkingSpotDAO.getNextAvailableSlot(any(ParkingType.class))).thenReturn(1);
+			when(parkingSpotDAO.updateToEmptyParking()).thenReturn(true);
 
 
 			parkingServiceUnderTest = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
@@ -67,35 +71,32 @@ public class ParkingServiceTest {
 	}
 
 	@Disabled
-	@Test // check fare
+	@Test 
 	public void processExitingVehicleTest() {
 		//double result = parkingServiceUnderTest.processExitingVehicle();
-		verify(parkingSpotDAO, Mockito.times(1)).updateParking(any(ParkingSpot.class));
-		assertThat(result).isEqualTo(Fare.CAR_RATE_PER_HOUR);
-	}
+		parkingServiceUnderTest = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
 
-	// check availability +1
+		parkingServiceUnderTest.processExitingVehicle();
+		
+		//verify(parkingSpotDAO, Mockito.times(1)).updateParking(any(ParkingSpot.class));
+		//verify(ticketDAO, Mockito.times(2)).updateTicket(any(Ticket.class));
+		verify(ticketDAO, Mockito.times(1)).getTicket(any(String.class));
+		//verify(ticketDAO, Mockito.times(1)).recurringUserTicket(any(String.class));
+	}
 	
-	//@Disabled
-	@Test //check availability -1
-	public void givenAnEmptyParkingLot_whenACarEnters_thenTheSlotShouldBeOne() {
-		
-		ParkingSpotDAO emptyParking = new ParkingSpotDAO();
-		emptyParking.updateToEmptyParking();
-		//when (inputReaderUtil.readSelection()).thenReturn(1);
-		
-		ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);
-		parkingSpotDAO.updateParking(parkingSpot);
-		
+	@Disabled
+	@Test 
+	public void givenAnEmptyParkingLot_whenACarEnters_thenTheSlotShouldBeOne() {		
 		parkingServiceUnderTest = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
 		
 		int result = parkingServiceUnderTest.processIncomingVehicle() ;
 		
 		//verify(parkingSpotDAO, Mockito.times(1)).updateParking(any(ParkingSpot.class));
-		
+		verify(parkingSpotDAO, Mockito.times(1)).getNextAvailableSlot(any(ParkingType.class));
+		//verify(ticketDAO, Mockito.times(1)).saveTicket(any(Ticket.class));
 		assertThat(result).isEqualTo(1);
 	}
-	@Disabled
+/*	@Disabled
 	@Test //check availability -1
 	public void givenAnEmptyParkingLot_whenABikeEnters_thenTheSlotShouldBeFour() {
 
@@ -109,5 +110,5 @@ public class ParkingServiceTest {
 		
 		//verify(parkingSpotDAO, Mockito.times(1)).updateParking(any(ParkingSpot.class));
 		assertThat(result).isEqualTo(4);
-	}
+	}*/
 }

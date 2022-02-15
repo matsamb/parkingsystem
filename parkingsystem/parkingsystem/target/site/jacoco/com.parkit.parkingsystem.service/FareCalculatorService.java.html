@@ -47,22 +47,22 @@ import com.parkit.parkingsystem.model.Ticket;
 <span class="fc" id="L47">		double minuteDurationDifferentHours = (hourDurationDifferentDays - 1) * MINUTE_END + (outMinute - MINUTE_START)</span>
 				+ (MINUTE_END - inMinute);
 
-<span class="pc bpc" id="L50" title="1 of 2 branches missed.">		if (ticket.getRecurrentUser() == true) {</span>
-<span class="nc" id="L51">			System.out.println(&quot;Welcome back! As a recurring user of our parking lot, you'll benefit from a\r\n&quot;</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">		if (ticket.getRecurrentUser() == true) {</span>
+<span class="fc" id="L51">			System.out.println(&quot;Welcome back! As a recurring user of our parking lot, you'll benefit from a\r\n&quot;</span>
 					+ &quot;	 * 5% discount.&quot;);
-<span class="nc bnc" id="L53" title="All 3 branches missed.">			switch (ticket.getParkingSpot().getParkingType()) {</span>
+<span class="pc bpc" id="L53" title="1 of 3 branches missed.">			switch (ticket.getParkingSpot().getParkingType()) {</span>
 				case CAR: {
-<span class="nc" id="L55">					ticket.setPrice(MINUTE_START);</span>
-<span class="nc bnc" id="L56" title="All 2 branches missed.">					if (minuteDurationDifferentHours &gt; FREE_TIME) {</span>
-<span class="nc" id="L57">						ticket.setPrice((minuteDurationDifferentHours / 60) * RECURRENT_USER * Fare.CAR_RATE_PER_HOUR);</span>
+<span class="fc" id="L55">					ticket.setPrice(MINUTE_START);</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">					if (minuteDurationDifferentHours &gt; FREE_TIME) {</span>
+<span class="fc" id="L57">						ticket.setPrice((minuteDurationDifferentHours / 60) * RECURRENT_USER * Fare.CAR_RATE_PER_HOUR);</span>
 					}
 					break;
 				}
 
 				case BIKE: {
-<span class="nc" id="L63">					ticket.setPrice(MINUTE_START);</span>
-<span class="nc bnc" id="L64" title="All 2 branches missed.">					if (minuteDurationDifferentHours &gt; FREE_TIME) {</span>
-<span class="nc" id="L65">						ticket.setPrice((minuteDurationDifferentHours / 60) * RECURRENT_USER * Fare.BIKE_RATE_PER_HOUR);</span>
+<span class="fc" id="L63">					ticket.setPrice(MINUTE_START);</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">					if (minuteDurationDifferentHours &gt; FREE_TIME) {</span>
+<span class="fc" id="L65">						ticket.setPrice((minuteDurationDifferentHours / 60) * RECURRENT_USER * Fare.BIKE_RATE_PER_HOUR);</span>
 					}
 					break;
 				}
