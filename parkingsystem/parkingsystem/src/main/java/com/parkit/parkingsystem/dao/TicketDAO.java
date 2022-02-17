@@ -1,6 +1,7 @@
 package com.parkit.parkingsystem.dao;
 
 import com.parkit.parkingsystem.config.DataBaseConfig;
+
 import com.parkit.parkingsystem.constants.DBConstants;
 import com.parkit.parkingsystem.constants.ParkingType;
 import com.parkit.parkingsystem.model.ParkingSpot;
@@ -26,6 +27,13 @@ public class TicketDAO {
 
 	public DataBaseConfig dataBaseConfig = new DataBaseConfig();
 
+	
+	public TicketDAO () {};
+	
+	public TicketDAO (DataBaseConfig dataBaseConfig) {
+		this.dataBaseConfig = dataBaseConfig;
+	}
+	
 	/**
 	 * 
 	 * @param ticket
@@ -89,16 +97,17 @@ public class TicketDAO {
 				inTime.setTimeInMillis(rs.getTimestamp(4).getTime());
 				ticket.setInTime(inTime);
 
-				Calendar outTime = Calendar.getInstance();
-				outTime.setTimeInMillis(System.currentTimeMillis());// rs.getTimestamp(5).getTime()
-				ticket.setOutTime(outTime);
+				Calendar outTimeGt = Calendar.getInstance();
+				outTimeGt.setTimeInMillis(System.currentTimeMillis());// rs.getTimestamp(5).getTime()
+				ticket.setOutTime(outTimeGt);
+				return ticket;
 			}
 			dataBaseConfig.closeResultSet(rs);
 			dataBaseConfig.closePreparedStatement(ps);
 		} catch (Exception ex) {
 			logger.error("Error fetching next available slot", ex);
 		} finally {
-			dataBaseConfig.closeConnection(con);
+			dataBaseConfig.closeConnection(con);  
 		}
 		return ticket;
 	}
@@ -136,7 +145,7 @@ public class TicketDAO {
 			ps.setString(1, vehicleRegNumber);
 
 			ResultSet rs = ps.executeQuery();
-
+ 
 			rs.next();
 			int occurrence = rs.getInt(1);
 			if (occurrence > 1) {

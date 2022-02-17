@@ -2,67 +2,72 @@ package com.parkit.parkingsystem;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.Timestamp;
+import java.util.Calendar;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import com.parkit.parkingsystem.config.DataBaseConfig;
-import com.parkit.parkingsystem.constants.DBConstants;
 import com.parkit.parkingsystem.constants.ParkingType;
-import com.parkit.parkingsystem.dao.ParkingSpotDAO;
 import com.parkit.parkingsystem.dao.TicketDAO;
+import com.parkit.parkingsystem.integration.config.DataBaseTestConfigIT;
+import com.parkit.parkingsystem.integration.service.DataBasePrepareService;
 import com.parkit.parkingsystem.model.ParkingSpot;
+import com.parkit.parkingsystem.model.Ticket;
 
 public class TicketDaoTest {
 	
 	@Test
-	public void givenAnEmptyParkingLot_whenACarCallsForSlotOne_thenUpdateParkingShouldReturnTrue() {
+	public void givenAnInSlotRegNumber_whenAskedFor_thenGetTicketShouldReturnTheTicket() {
+		//(PARKING_NUMBER, VEHICLE_REG_NUMBER, PRICE, IN_TIME, OUT_TIME, IN_SLOT)
+		//values (3, 'AA', 1.5, '2022-02-13 14:29:32', null, 1)
 		
-		ParkingSpotDAO emptyParking = new ParkingSpotDAO();
-		emptyParking.updateToEmptyParking();
+		DataBasePrepareService clearParkingAndTicket = new DataBasePrepareService();
+		clearParkingAndTicket.clearDataBaseEntriesAndInsertSame_AA_RegistrationTicket();
+		DataBaseTestConfigIT data = new DataBaseTestConfigIT();
 		
-		ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR,false);
-						
-		boolean result = emptyParking.updateParking(parkingSpot);
+		ParkingSpot refParkingSpot = new ParkingSpot();
 		
-		assertThat(result).isTrue();
+		refParkingSpot.setAvailable(false);
+		refParkingSpot.setParkingType(ParkingType.CAR);
+		refParkingSpot.setId(3);
+		
+		Ticket refTicket = new Ticket();
+		
+		refTicket.setParkingSpot(refParkingSpot);
+		refTicket.setId(1);
+		refTicket.setVehicleRegNumber("AA");
+		refTicket.setPrice(1.5);
+
+		Calendar inTime = Calendar.getInstance();
+		Timestamp tsIn = Timestamp.valueOf("2022-02-13 14:29:32");
+		inTime.setTimeInMillis(tsIn.getTime());
+		refTicket.setInTime(inTime);
+
+		/*Calendar outTime = Calendar.getInstance();
+		Timestamp tsOut = Timestamp.valueOf("2022-02-13 15:29:32");
+		outTime.setTimeInMillis(tsOut.getTime());// rs.getTimestamp(5).getTime() */
+		refTicket.setOutTime(null);
+		
+		TicketDAO ticketDao = new TicketDAO(data);						
+		
+		Ticket result = ticketDao.getTicket("AA");
+		
+		assertThat(result.getPrice()).isEqualTo(refTicket.getPrice()); 
+		assertThat(result.getId()).isEqualTo(refTicket.getId()); 
+
+		//assertThat(result.getVehicleRegNumber()).isEqualTo(refTicket.getVehicleRegNumber()); 
+
 	}
 	
-	@Test
-	public void givenAnEmptyParkingLot_whenNoCallsForASlot_thenUpdateParkingShouldReturnFalse() {
-		
-		ParkingSpotDAO emptyParking = new ParkingSpotDAO();
-		emptyParking.updateToEmptyParking();
-		
-		ParkingSpot parkingSpot = new ParkingSpot(0, ParkingType.CAR,false);
-						
-		boolean result = emptyParking.updateParking(parkingSpot);
-		
-		assertThat(result).isFalse();
-	}
-	
-	//@Disabled
 	@Test
 	public void givenARecurringUser_whenHeAsksForHisStatus_thenRecurringUserTicketShouldReturnTrue() {
 		
-		DataBaseConfig dataBaseConfig = new DataBaseConfig();
-		
-		Connection con = null;
-        try {
-            con = dataBaseConfig.getConnection();  
-            PreparedStatement ps = con.prepareStatement(DBConstants.INSERT_TWO_TICKET_SAME_AA_REGISTRATION_NUMBER_TEST);
-            ps.execute();        
-        }catch (Exception ex){
-            System.out.println("Error saving ticket info" + ex);
-        }finally {
-            dataBaseConfig.closeConnection(con);
-        }
-		
+		DataBasePrepareService clearParkingAndTicket = new DataBasePrepareService();
+		clearParkingAndTicket.clearDataBaseEntriesAndInsertSame_AA_RegistrationTicket();
+		DataBaseTestConfigIT data = new DataBaseTestConfigIT();
+
 		String vehicleRegNumber = "AA";
-		TicketDAO ticketDao = new TicketDAO();
+		TicketDAO ticketDao = new TicketDAO(data);
 						
 		boolean result = ticketDao.recurringUserTicket(vehicleRegNumber);
 		

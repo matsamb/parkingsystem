@@ -16,13 +16,21 @@ public class ParkingSpotDAO {
 
 	public DataBaseConfig dataBaseConfig = new DataBaseConfig(); 
 
+	
+	
+	public ParkingSpotDAO () {};
+	
+	public ParkingSpotDAO (DataBaseConfig dataBaseConfig) {
+		this.dataBaseConfig = dataBaseConfig;
+	}
+	
 	/**
 	 * Starts connection, executes preset parameterized (parameter turned into parking type) query and gets 
 	 * the result from the parking table of the prod database. finally, connection is closed.
 	 * 
 	 * @param parkingType
 	 * @return int slot Id if room available
-	 */
+	 */ 
 
 	public int getNextAvailableSlot(ParkingType parkingType) {
 		Connection con = null;
@@ -73,7 +81,7 @@ public class ParkingSpotDAO {
 			dataBaseConfig.closeConnection(con);
 		}
 	}
-	
+	/*
 	//mine
 	
 	public boolean updateToEmptyParking() {
@@ -127,6 +135,6 @@ public class ParkingSpotDAO {
 		} finally {
 			dataBaseConfig.closeConnection(con);
 		}
-	}
+	}*/
 	
 }
