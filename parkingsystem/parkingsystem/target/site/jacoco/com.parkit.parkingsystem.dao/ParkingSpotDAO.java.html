@@ -47,7 +47,7 @@ public class ParkingSpotDAO {
 			}
 <span class="fc" id="L48">			dataBaseConfig.closeResultSet(rs);</span>
 <span class="fc" id="L49">			dataBaseConfig.closePreparedStatement(ps);</span>
-<span class="nc" id="L50">		} catch (Exception ex) {</span>
+<span class="pc" id="L50">		} catch (Exception ex) {</span>
 <span class="nc" id="L51">			logger.error(&quot;Error fetching next available slot&quot;, ex);</span>
 		} finally {
 <span class="fc" id="L53">			dataBaseConfig.closeConnection(con);</span>
@@ -80,62 +80,6 @@ public class ParkingSpotDAO {
 		} finally {
 <span class="fc" id="L81">			dataBaseConfig.closeConnection(con);</span>
 		}
-	}
-	/*
-	//mine
-	
-	public boolean updateToEmptyParking() {
-		// update the availability for that parking slot
-		Connection con = null;
-		try {
-			con = dataBaseConfig.getConnection();
-			PreparedStatement ps = con.prepareStatement(DBConstants.UPDATE_EMPTY_PARKING_SPOT_TEST);
-			int updateAvailability = ps.executeUpdate();
-			dataBaseConfig.closePreparedStatement(ps);
-			return (updateAvailability == 1);
-		} catch (Exception ex) {
-			logger.error(&quot;Error updating parking info&quot;, ex);
-			return false;
-		} finally {
-			dataBaseConfig.closeConnection(con);
-		}
-	}
-	
-	public boolean updateToFullParking() {
-		// update the availability for that parking slot
-		Connection con = null;
-		try {
-			con = dataBaseConfig.getConnection();
-			PreparedStatement ps = con.prepareStatement(DBConstants.UPDATE_FULL_PARKING_SPOT_TEST);
-			int updateAvailability = ps.executeUpdate();
-			dataBaseConfig.closePreparedStatement(ps);
-			return (updateAvailability == 1);
-		} catch (Exception ex) {
-			logger.error(&quot;Error updating parking info&quot;, ex);
-			return false;
-		} finally {
-			dataBaseConfig.closeConnection(con);
-		}
-	}
-	
-	//à faire
-	public boolean updateToFullParkingWithSameReg(String vehicleRegNumber) {
-		// update the availability for that parking slot
-		Connection con = null;
-		try {
-			con = dataBaseConfig.getConnection();
-			PreparedStatement ps = con.prepareStatement(DBConstants.UPDATE_FULL_PARKING_SPOT_WITH_SAME_REG_TEST);
-			ps.setString(1, vehicleRegNumber);
-			int updateAvailability = ps.executeUpdate();
-			dataBaseConfig.closePreparedStatement(ps);
-			return (updateAvailability == 1);
-		} catch (Exception ex) {
-			logger.error(&quot;Error updating parking info&quot;, ex);
-			return false;
-		} finally {
-			dataBaseConfig.closeConnection(con);
-		}
-	}*/
-	
+	}	
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

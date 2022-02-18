@@ -45,7 +45,7 @@ import com.parkit.parkingsystem.model.Ticket;
 <span class="fc" id="L45">		double dayDuration = outDay - inDay;</span>
 <span class="fc" id="L46">		double hourDurationDifferentDays = (dayDuration - 1) * DAY_END + (outHour - DAY_START) + (DAY_END - inHour);</span>
 <span class="fc" id="L47">		double minuteDurationDifferentHours = (hourDurationDifferentDays - 1) * MINUTE_END + (outMinute - MINUTE_START)</span>
-				+ (MINUTE_END - inMinute);
+<span class="fc" id="L48">				+ (MINUTE_END - inMinute);</span>
 
 <span class="fc bfc" id="L50" title="All 2 branches covered.">		if (ticket.getRecurrentUser() == true) {</span>
 <span class="fc" id="L51">			System.out.println(&quot;Welcome back! As a recurring user of our parking lot, you'll benefit from a\r\n&quot;</span>
@@ -56,7 +56,7 @@ import com.parkit.parkingsystem.model.Ticket;
 <span class="fc bfc" id="L56" title="All 2 branches covered.">					if (minuteDurationDifferentHours &gt; FREE_TIME) {</span>
 <span class="fc" id="L57">						ticket.setPrice((minuteDurationDifferentHours / 60) * RECURRENT_USER * Fare.CAR_RATE_PER_HOUR);</span>
 					}
-					break;
+<span class="fc" id="L59">					break;</span>
 				}
 
 				case BIKE: {
@@ -64,26 +64,26 @@ import com.parkit.parkingsystem.model.Ticket;
 <span class="fc bfc" id="L64" title="All 2 branches covered.">					if (minuteDurationDifferentHours &gt; FREE_TIME) {</span>
 <span class="fc" id="L65">						ticket.setPrice((minuteDurationDifferentHours / 60) * RECURRENT_USER * Fare.BIKE_RATE_PER_HOUR);</span>
 					}
-					break;
+<span class="fc" id="L67">					break;</span>
 				}
 				default:
 <span class="nc" id="L70">					throw new IllegalArgumentException(&quot;Unknown Parking Type&quot;);</span>
 			}
-		} else {
+<span class="nc" id="L72">		} else {</span>
 <span class="pc bpc" id="L73" title="1 of 3 branches missed.">			switch (ticket.getParkingSpot().getParkingType()) {</span>
 				case CAR: {
 <span class="fc" id="L75">					ticket.setPrice(MINUTE_START);</span>
 <span class="fc bfc" id="L76" title="All 2 branches covered.">					if (minuteDurationDifferentHours &gt; FREE_TIME) {</span>
 <span class="fc" id="L77">						ticket.setPrice((minuteDurationDifferentHours / 60) * Fare.CAR_RATE_PER_HOUR);</span>
 					}
-					break;
+<span class="fc" id="L79">					break;</span>
 				}
 				case BIKE: {
 <span class="fc" id="L82">					ticket.setPrice(MINUTE_START);</span>
 <span class="fc bfc" id="L83" title="All 2 branches covered.">					if (minuteDurationDifferentHours &gt; FREE_TIME) {</span>
 <span class="fc" id="L84">						ticket.setPrice((minuteDurationDifferentHours / 60) * Fare.BIKE_RATE_PER_HOUR);</span>
 					}
-					break;
+<span class="fc" id="L86">					break;</span>
 				}
 				default:
 <span class="nc" id="L89">					throw new IllegalArgumentException(&quot;Unknown Parking Type&quot;);</span>
