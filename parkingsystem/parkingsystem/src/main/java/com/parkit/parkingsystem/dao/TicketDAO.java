@@ -149,7 +149,11 @@ public class TicketDAO {
 			rs.next();
 			int occurrence = rs.getInt(1);
 			if (occurrence > 1) {
+				logger.info("Welcome back! As a recurring user of our parking lot, you'll benefit from a"
+						+" * 5% discount.");
 				result = true;
+				System.out.println("Welcome back! As a recurring user of our parking lot, you'll benefit from a\r\n"
+								+ "	 * 5% discount.");
 			}
 		} catch (Exception ex) {
 			logger.error("Error saving ticket info", ex);

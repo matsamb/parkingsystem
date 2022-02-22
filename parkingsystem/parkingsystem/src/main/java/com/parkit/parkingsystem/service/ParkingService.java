@@ -81,6 +81,9 @@ public class ParkingService {
 				ticket.setInTime(inTime);
 				ticket.setOutTime(inTime);
 				ticketDAO.saveTicket(ticket);
+				
+				ticket.setRecurrentUser(ticketDAO.recurringUserTicket(vehicleRegNumber));
+
 
 				System.out.println("Generated Ticket and saved in DB");
 				System.out.println("Please park your vehicle in spot number:" + parkingSpot.getId());
@@ -176,7 +179,7 @@ public class ParkingService {
 			Ticket ticket = null; 
 			String vehicleRegNumber = getVehichleRegNumber();
 			ticket = ticketDAO.getTicket(vehicleRegNumber);
-			ticket.setRecurrentUser(ticketDAO.recurringUserTicket(vehicleRegNumber));
+			//ticket.setRecurrentUser(ticketDAO.recurringUserTicket(vehicleRegNumber));
 
 			Calendar outTime = Calendar.getInstance();
 			outTime.setTimeInMillis(System.currentTimeMillis());

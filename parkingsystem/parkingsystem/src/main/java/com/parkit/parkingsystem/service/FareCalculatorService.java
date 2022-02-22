@@ -33,7 +33,7 @@ public class FareCalculatorService {
 		double outHour = ticket.getOutTime().get(Calendar.HOUR_OF_DAY);
 		double inMinute = ticket.getInTime().get(Calendar.MINUTE);
 		double outMinute = ticket.getOutTime().get(Calendar.MINUTE);
-
+ 
 		// constants to calculate day or hour change crossing stays
 		final double DAY_END = 24;
 		final double DAY_START = 0;
@@ -48,8 +48,8 @@ public class FareCalculatorService {
 				+ (MINUTE_END - inMinute);
 
 		if (ticket.getRecurrentUser() == true) {
-			System.out.println("Welcome back! As a recurring user of our parking lot, you'll benefit from a\r\n"
-					+ "	 * 5% discount.");
+			//System.out.println("Welcome back! As a recurring user of our parking lot, you'll benefit from a\r\n"
+			//		+ "	 * 5% discount.");
 			switch (ticket.getParkingSpot().getParkingType()) {
 				case CAR: {
 					ticket.setPrice(MINUTE_START);

@@ -11,13 +11,20 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-	
+
 		<sonar.organization>matsamb</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
-	
+
 	</properties>
 
 	<dependencies>
+
+		<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-assembly-plugin -->
+		<dependency>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-assembly-plugin</artifactId>
+			<version>3.3.0</version>
+		</dependency>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-api</artifactId>
@@ -63,14 +70,9 @@
 			<version>0.8.5</version>
 			<type>maven-plugin</type>
 		</dependency>
-		<dependency>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-assembly-plugin</artifactId>
-			<version>3.0.0</version>
-		</dependency>
-		
-		
+
 	</dependencies>
+
 
 	<build>
 		<plugins>
@@ -79,6 +81,7 @@
 				<artifactId>maven-assembly-plugin</artifactId>
 				<executions>
 					<execution>
+						<id></id>
 						<phase>package</phase>
 						<goals>
 							<goal>single</goal>
@@ -91,9 +94,9 @@
                                     </mainClass>
 								</manifest>
 							</archive>
-							<descriptorRefs>
-								<descriptorRef>executable-jar-with-dependencies</descriptorRef>
-							</descriptorRefs>
+							<descriptors>
+								<descriptor>parkingsystem_parkingsystem/assembly.xml</descriptor>
+							</descriptors>
 						</configuration>
 					</execution>
 				</executions>
